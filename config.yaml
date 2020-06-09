@@ -1,0 +1,144 @@
+# Title of this configuration file
+title: "Simulation Test"
+# Tag that identifies this configuration file.
+tag: "sim-test"
+# Description of this configuration file
+description: ""
+# Author of this configuration file
+author: ""
+
+# Extraction rules
+rules:
+  time-series-car:
+    plugin: "rbb_tools.plugins.time_series"
+    config:
+      topics:
+        /estimation/velocity_estimation/velocity_estimation:
+          # Sub sampling goes here
+          name: "Velocity Estimation"
+          # Series are the message fields to record
+          series:
+            car_state_dt.x:
+              label: "car_state_dt.x"
+              symbol: "v_x"
+              unit: "m/s"
+              default_color: "#FF0000"
+            car_state_dt.y:
+              label: "car_state_dt.y"
+              symbol: "v_y"
+              unit: "m/s"
+              default_color: "#00FF00"
+            car_state_dt.theta:
+              label: "car_state_dt.theta"
+              symbol: "r"
+              unit: "rad/s"
+              default_color: "#FF00FF"             
+        /control/pure_pursuit/control_command:
+          # Sub sampling goes here
+          name: "Control Command"
+          # Series are the message fields to record
+          series:
+            throttle.data:
+              label: "Throttle"
+              default_color: "#FF0000"
+            steering_angle.data:
+              label: "Transveral Velocity"
+              default_color: "#0000FF"
+        /fssim/cmd:
+          # Sub sampling goes here
+          name: "FSSIM Command"
+          # Series are the message fields to record
+          series:
+            throttle:
+              default_color: "#FF0000"
+            steering_angle:
+              default_color: "#0000FF"
+        /fssim/car_info:
+          # Sub sampling goes here
+          name: "FSSIM Model Info Forces"
+          # Series are the message fields to record
+          series:
+            Fy_f:
+              default_color: "#FF0000"
+            Fy_f_l:
+              default_color: "#FF0030"
+            Fy_f_r:
+              default_color: "#FF0060"
+            Fy_r:
+              default_color: "#00FF00"
+            Fy_r_l:
+              default_color: "#00FF30"
+            Fy_r_r:
+              default_color: "#00FF60"
+            Fx:
+              default_color: "#0000FF"
+    topic_matchers:
+      - type: "rbb_tools.extraction.matchers.ExactMatchingRule"
+        config:
+          topics:
+            /fssim/cmd: "*"
+  
+  matplotlib-rule:
+    plugin: "rbb_tools.plugins.matplotlib_plotter"
+    config:
+      data:
+        # Groundtruth
+        - name: "groundtruth_x"
+          type: "raw"
+          topic: "/fssim/base_pose_ground_truth.x"
+        - name: "groundtruth_y"
+          type: "raw"
+          topic: "/fssim/base_pose_ground_truth.y"
+
+        # SLAM Pose
+        - name: "slam_x"
+          type: "raw"
+          topic: "/estimation/slam/state.car_state.x"
+        - name: "slam_y"
+          type: "raw"
+          topic: "/estimation/slam/state.car_state.y"
+
+      figures:
+        slam-and-truth-pose:
+          title: "SLAM and Truth Pose"
+          xlabel: "X"
+          ylabel: "Y"
+          aspect: "equal"
+          legend: "best"
+          width: 1500
+          height: 1500
+          plots:
+            - type: "lineplot"
+              x: "groundtruth_x"
+              y: "groundtruth_y"
+              kwargs:
+                label: "Truth Pose"
+            - type: "lineplot"
+              x: "slam_x"
+              y: "slam_y"
+              kwargs:
+                label: "SLAM Pose"
+
+    topic_matchers:
+      - type: "rbb_tools.extraction.matchers.AllTopicsMatchingRule"
+        config:
+
+  rviz-example:
+    plugin: "rbb_tools.plugins.rviz_recorder"
+    config:
+      rviz_file: 'fssim.rviz'
+      title: 'Video'
+      width: 1920
+      height: 1080
+      logo: 'get-transparent.png'
+      logo_x: 30
+      logo_y: 30
+      text_x: 200
+      text_y: 30
+      font: 'helvetica.ttf'
+      splash_screen: ''
+    topic_matchers:
+      - type: "rbb_tools.extraction.matchers.ExactMatchingRule"
+        config:
+          topics:
+            /fssim/cmd: "*"
