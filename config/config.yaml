@@ -107,7 +107,7 @@ rules:
       title: 'Video'
       width: 1920
       height: 1080
-      logo: 'get-transparent.png'
+      logo: ''
       logo_x: 30
       logo_y: 30
       text_x: 200
