@@ -24,6 +24,16 @@ rules:
             steering_angle.data:
               label: "Transveral Velocity"
               default_color: "#0000FF"
+        /fssim/cmd:
+          # Sub sampling goes here
+          name: "FSSIM Command"
+          # Series are the message fields to record
+          series:
+            throttle:
+              default_color: "#FF0000"
+            steering_angle:
+              default_color: "#0000FF"
+        /fssim/car_info:
           # Sub sampling goes here
           name: "FSSIM Model Info Forces"
           # Series are the message fields to record
@@ -42,17 +52,6 @@ rules:
               default_color: "#00FF60"
             Fx:
               default_color: "#0000FF"
-        /odom/state_dt:
-          # Odometry State Positions
-          name: "Odometry"
-          # Series are the message fields to record
-          series:
-            car_state.x:
-              default_color: "#FF0000"
-            car_state.y:
-              default_color: "#0000FF"
-            car_state.theta:
-              default_color: "#00FF00"
     topic_matchers:
       - type: "rbb_tools.extraction.matchers.ExactMatchingRule"
         config:
@@ -108,7 +107,7 @@ rules:
       title: 'Video'
       width: 1920
       height: 1080
-      logo: ''
+      logo: 'get-transparent.png'
       logo_x: 30
       logo_y: 30
       text_x: 200
