@@ -57,15 +57,15 @@ rules:
           name: "Odometry"
           # Series are the message fields to record
           series:
-            x.data:
+            x:
               label: "X Value"
-              default_color: "#FF0000"
-            y.data:
+              default_color: "#00FF00"
+            y:
               label: "Y Value"
               default_color: "#0000FF"
-            theta.data:
+            theta:
               label: "Theta"
-              default_color: "#00FF00"
+              default_color: "#FF0000"
     topic_matchers:
       - type: "rbb_tools.extraction.matchers.ExactMatchingRule"
         config:
@@ -121,7 +121,7 @@ rules:
       title: 'Video'
       width: 1920
       height: 1080
-      logo: 'get-transparent.png'
+      logo: ''
       logo_x: 30
       logo_y: 30
       text_x: 200
