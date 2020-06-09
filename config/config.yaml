@@ -1,11 +1,11 @@
 # Title of this configuration file
-title: "Simulation Test"
+title: "JARVIC Test"
 # Tag that identifies this configuration file.
-tag: "sim-test"
+tag: "jarvic-test"
 # Description of this configuration file
 description: ""
 # Author of this configuration file
-author: ""
+author: "Jan Jacobs, Valentin Rusche"
 
 # Extraction rules
 rules:
@@ -13,26 +13,6 @@ rules:
     plugin: "rbb_tools.plugins.time_series"
     config:
       topics:
-        /estimation/velocity_estimation/velocity_estimation:
-          # Sub sampling goes here
-          name: "Velocity Estimation"
-          # Series are the message fields to record
-          series:
-            car_state_dt.x:
-              label: "car_state_dt.x"
-              symbol: "v_x"
-              unit: "m/s"
-              default_color: "#FF0000"
-            car_state_dt.y:
-              label: "car_state_dt.y"
-              symbol: "v_y"
-              unit: "m/s"
-              default_color: "#00FF00"
-            car_state_dt.theta:
-              label: "car_state_dt.theta"
-              symbol: "r"
-              unit: "rad/s"
-              default_color: "#FF00FF"             
         /control/pure_pursuit/control_command:
           # Sub sampling goes here
           name: "Control Command"
@@ -72,6 +52,20 @@ rules:
               default_color: "#00FF60"
             Fx:
               default_color: "#0000FF"
+        /odom/state_dt:
+          # Odometry State Positions
+          name: "Odometry"
+          # Series are the message fields to record
+          series:
+            x.data:
+              label: "X Value"
+              default_color: "#FF0000"
+            y.data:
+              label: "Y Value"
+              default_color: "#0000FF"
+            theta.data:
+              label: "Theta"
+              default_color: "#00FF00"
     topic_matchers:
       - type: "rbb_tools.extraction.matchers.ExactMatchingRule"
         config:
@@ -89,7 +83,6 @@ rules:
         - name: "groundtruth_y"
           type: "raw"
           topic: "/fssim/base_pose_ground_truth.y"
-
         # SLAM Pose
         - name: "slam_x"
           type: "raw"
@@ -97,7 +90,6 @@ rules:
         - name: "slam_y"
           type: "raw"
           topic: "/estimation/slam/state.car_state.y"
-
       figures:
         slam-and-truth-pose:
           title: "SLAM and Truth Pose"
@@ -118,7 +110,6 @@ rules:
               y: "slam_y"
               kwargs:
                 label: "SLAM Pose"
-
     topic_matchers:
       - type: "rbb_tools.extraction.matchers.AllTopicsMatchingRule"
         config:
