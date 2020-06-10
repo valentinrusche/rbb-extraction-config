@@ -116,7 +116,7 @@ rules:
       text_x: 200
       text_y: 30
       font: 'helvetica.ttf'
-      splash_screen: ''
+      splash_screen: 'get.png'
     topic_matchers:
       - type: "rbb_tools.extraction.matchers.ExactMatchingRule"
         config:
