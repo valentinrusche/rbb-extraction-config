@@ -69,6 +69,7 @@ rules:
         - name: "groundtruth_y"
           type: "raw"
           topic: "/fssim/base_pose_ground_truth.y"
+
         # SLAM Pose
         - name: "slam_x"
           type: "raw"
@@ -76,6 +77,7 @@ rules:
         - name: "slam_y"
           type: "raw"
           topic: "/estimation/slam/state.car_state.y"
+
       figures:
         slam-and-truth-pose:
           title: "SLAM and Truth Pose"
@@ -96,6 +98,7 @@ rules:
               y: "slam_y"
               kwargs:
                 label: "SLAM Pose"
+
     topic_matchers:
       - type: "rbb_tools.extraction.matchers.AllTopicsMatchingRule"
         config:
