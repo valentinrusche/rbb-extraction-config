@@ -5,7 +5,7 @@ tag: "rbb-vizualizations-jarvic"
 # Description of this configuration file
 description: ""
 # Author of this configuration file
-author: "Jan Jacobs, Valentin Rusche"
+author: "Jan Jacobs, Nico Koltermann, Valentin Rusche"
 
 # Extraction rules
 rules:
@@ -24,6 +24,14 @@ rules:
             steering_angle.data:
               label: "Transveral Velocity"
               default_color: "#0000FF"
+        /visu/trj/smoothed:
+          # Sub sampling goes here
+          name: "Smoothed Trajectory"
+          # Series are the message fields to record
+          series:
+            smoothed:
+              label: "Smoothed Trajectory"
+              default_color: "#FF0000"
         /fssim/cmd:
           # Sub sampling goes here
           name: "FSSIM Command"
@@ -62,13 +70,13 @@ rules:
     plugin: "rbb_tools.plugins.matplotlib_plotter"
     config:
       data:
-        # Groundtruth
-        - name: "groundtruth_x"
+        # Trajectory
+        - name: "smoothed_x"
           type: "raw"
-          topic: "/fssim/base_pose_ground_truth.x"
-        - name: "groundtruth_y"
+          topic: "visu/trj/smoothed.polygon.points.x"
+        - name: "smoothed_y"
           type: "raw"
-          topic: "/fssim/base_pose_ground_truth.y"
+          topic: "visu/trj/smoothed.polygon.points.y"
 
         # SLAM Pose
         - name: "slam_x"
@@ -80,7 +88,7 @@ rules:
 
       figures:
         slam-and-truth-pose:
-          title: "SLAM and Truth Pose"
+          title: "SLAM and Trajectory"
           xlabel: "X"
           ylabel: "Y"
           aspect: "equal"
@@ -89,10 +97,10 @@ rules:
           height: 1500
           plots:
             - type: "lineplot"
-              x: "groundtruth_x"
-              y: "groundtruth_y"
+              x: "smoothed_x"
+              y: "smoothed_y"
               kwargs:
-                label: "Truth Pose"
+                label: "Trajectory"
             - type: "lineplot"
               x: "slam_x"
               y: "slam_y"
@@ -110,13 +118,13 @@ rules:
       title: 'Video'
       width: 1920
       height: 1080
-      logo: 'logo.png'
+      logo: '1x1-transparent.png'
       logo_x: 30
       logo_y: 30
       text_x: 200
       text_y: 30
       font: 'helvetica.ttf'
-      splash_screen: 'get.png'
+      splash_screen: '1x1-transparent.png'
     topic_matchers:
       - type: "rbb_tools.extraction.matchers.ExactMatchingRule"
         config:
