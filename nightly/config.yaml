@@ -73,10 +73,10 @@ rules:
         # SLAM Pose
         - name: "slam_x"
           type: "raw"
-          topic: "/estimation/slam/state.car_state.x"
+          topic: "/slam/state.car_state.x"
         - name: "slam_y"
           type: "raw"
-          topic: "/estimation/slam/state.car_state.y"
+          topic: "/slam/state.car_state.y"
 
       figures:
         slam-and-truth-pose:
