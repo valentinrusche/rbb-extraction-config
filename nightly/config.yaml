@@ -13,7 +13,7 @@ rules:
     plugin: "rbb_tools.plugins.time_series"
     config:
       topics:
-        /control/pure_pursuit/control_command:
+        /con/control_command:
           # Sub sampling goes here
           name: "Control Command"
           # Series are the message fields to record
